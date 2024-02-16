@@ -1,0 +1,17 @@
+﻿<Window x:Class="NebulaSimplePhotoEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
+        Title="Image Viewer" Height="350" Width="525"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+    <Grid x:Name="click" VerticalAlignment="Top">
+        <Image x:Name="imageControl"  Stretch="UniformToFill" MouseWheel="imageControl_MouseWheel" MouseLeftButtonDown="imageControl_MouseLeftButtonDown" />
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Click="MenuItem_Open_Click"/>
+                <MenuItem Header="Exit" Click="MenuItem_Exit_Click"/>
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>
