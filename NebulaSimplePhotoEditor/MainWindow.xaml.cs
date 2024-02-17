@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -23,11 +24,6 @@ namespace NebulaSimplePhotoEditor
             InitializeComponent();
             PrepareImage("pack://application:,,,/Resources/no_image.png");
 
-        }
-
-        private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
-        {
-            ShowBrowseImageDialog();
         }
 
         private void LoadImage(string imagePath)
@@ -73,11 +69,6 @@ namespace NebulaSimplePhotoEditor
             this.Top = (SystemParameters.PrimaryScreenHeight - this.Height) / 2;
         }
 
-        private void MenuItem_Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
         private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             // Fare orta tıklama
@@ -105,6 +96,10 @@ namespace NebulaSimplePhotoEditor
             this.Width = imageWidth;
             this.Height = imageHeight;
 
+
+            // Formu ekranın ortasına tekrar yerleştir
+            this.Left = (SystemParameters.PrimaryScreenWidth - this.Width) / 2;
+            this.Top = (SystemParameters.PrimaryScreenHeight - this.Height) / 2;
             // İşlemlerinizi burada gerçekleştirin (isteğe bağlı)
             Console.WriteLine($"Mouse Wheel Moved: {e.Delta}, New Size: {imageWidth} x {imageHeight}");
         }
@@ -151,6 +146,8 @@ namespace NebulaSimplePhotoEditor
             
         }
 
+        private List<string> imageFiles;
+        private int currentIndex = -1;
         private void ShowBrowseImageDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -158,7 +155,33 @@ namespace NebulaSimplePhotoEditor
 
             if (openFileDialog.ShowDialog() == true)
             {
-                LoadImage(openFileDialog.FileName);
+                string? folderPath = Path.GetDirectoryName(openFileDialog.FileName);
+                imageFiles = Directory.GetFiles(folderPath, "*.png", SearchOption.TopDirectoryOnly).ToList();
+
+                if (imageFiles.Count > 0)
+                {
+                    currentIndex = imageFiles.IndexOf(openFileDialog.FileName);
+                    LoadImage(openFileDialog.FileName);
+                }
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (imageFiles == null || imageFiles.Count == 0)
+                return;
+
+            switch (e.Key)
+            {
+                case Key.Right:
+                    currentIndex = (currentIndex + 1) % imageFiles.Count;
+                    LoadImage(imageFiles[currentIndex]);
+                    break;
+
+                case Key.Left:
+                    currentIndex = (currentIndex - 1 + imageFiles.Count) % imageFiles.Count;
+                    LoadImage(imageFiles[currentIndex]);
+                    break;
             }
         }
     }

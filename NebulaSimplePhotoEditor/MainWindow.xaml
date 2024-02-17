@@ -4,14 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
         Title="Image Viewer" Height="350" Width="525"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown">
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown" KeyDown="Window_KeyDown">
     <Grid x:Name="click" VerticalAlignment="Top">
         <Image x:Name="imageControl"  Stretch="UniformToFill" MouseWheel="imageControl_MouseWheel" MouseLeftButtonDown="imageControl_MouseLeftButtonDown" />
-        <Menu Height="20" VerticalAlignment="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="Open" Click="MenuItem_Open_Click"/>
-                <MenuItem Header="Exit" Click="MenuItem_Exit_Click"/>
-            </MenuItem>
-        </Menu>
     </Grid>
 </Window>
