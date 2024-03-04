@@ -82,7 +82,7 @@ namespace NebulaSimplePhotoEditor
         {
             StartTimer();
             // Tekerleğin yukarı veya aşağı hareketine bağlı olarak boyutlandırmayı gerçekleştirin
-            double scale = (e.Delta > 0) ? 1.1 : 0.9;
+            double scale = (e.Delta > 0) ? 1.01 : 0.99;
 
             // Yeni genişlik ve yüksekliği hesaplayın
             imageWidth *= scale;
@@ -156,7 +156,7 @@ namespace NebulaSimplePhotoEditor
             if (openFileDialog.ShowDialog() == true)
             {
                 string? folderPath = Path.GetDirectoryName(openFileDialog.FileName);
-                imageFiles = Directory.GetFiles(folderPath, "*.png", SearchOption.TopDirectoryOnly).ToList();
+                imageFiles = Directory.GetFiles(folderPath, "*.png", SearchOption.TopDirectoryOnly).ToList();//  todo multiple ext.
 
                 if (imageFiles.Count > 0)
                 {
